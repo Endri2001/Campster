@@ -1,10 +1,32 @@
 const express = require('express');
+const path = require('path');
+const mongoose = require('mongoose');
+const Campground = require("./models/camp")
+
+mongoose.connect("mongodb://localhost:27017/campster",{
+    useNewUrlParser:true,
+    // use MongoDb driver's new connection managment engine
+    useUnifiedTopology:true
+});
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log("DATABASE CONNECTED")
+});
+
 const app = express();
 
+// make sure that express reads ejs templates
+app.set('view engine', 'ejs');
+// the views folder is where we get our ejs its the default place where express looks
+app.set('views', path.join(__dirname,'templates','views'));
 
 app.get('/',(req,res)=>{
-    res.send("HELLO main page");
+    res.render('home')
 })
+
+
 
 
 app.listen(3000,()=>{
