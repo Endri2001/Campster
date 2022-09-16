@@ -26,8 +26,15 @@ app.get('/',(req,res)=>{
     res.render('home')
 })
 
+app.get('/camps', async (req,res)=>{
+    const camps = await Campground.find({})
+    res.render("camps/index",{camps})
+})
 
-
+app.get('/camps/:id', async (req,res)=>{
+    const camp = await Campground.find({})
+    res.render("camps/index",{camps})
+})
 
 app.listen(3000,()=>{
     console.log('Server on port 3000');
